@@ -144,17 +144,18 @@ function renderList(heading, root) {
     return;
   }
   let nodes = Object.keys(heading);
-  console.log(nodes, heading, "nods");
-//   if (nodes.includes("children")) {
-//     nodes = ["children"];
-//   }
+    if (nodes.includes("children")) {
+      nodes = ["children"];
+    }
   for (let node of nodes) {
     let subList = liValues(node, nodes.includes("children"), heading);
     root.appendChild(subList);
     if (heading[node] && heading[node].children) {
       let innerRoot = document.createElement("ul");
-      renderList(heading[node].children[0], innerRoot);
-      subList.appendChild(innerRoot);
+      heading[node].children.forEach((val) => {
+        renderList(val, innerRoot);
+        subList.appendChild(innerRoot);
+      });
     }
   }
 }
